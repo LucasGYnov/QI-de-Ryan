@@ -24,7 +24,7 @@
       "$vote": {
         "$u": {
           ".write": "root.child('votes').child($vote).child('c').exists() && $u.length <= 40",
-          ".validate": "newData.val() === true"
+          ".validate": "newData.val() === true || (newData.isString() && newData.val().matches(/^(respect|mdr|wanted|croco|cash|confiance)$/))"
         }
       }
     }

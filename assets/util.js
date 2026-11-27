@@ -24,3 +24,7 @@ export const ago = t => {
   if (s < 86400) return 'il y a ' + Math.floor(s / 3600) + ' h';
   return new Date(t).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 };
+
+// Clé de regroupement des pseudos : « Mathieu », « mathieu » et « Mathieu  » comptent pour la même personne.
+export const nameKey = n => String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+export const plural = (n, one, many = one + 's') => `${n} ${n > 1 ? many : one}`;

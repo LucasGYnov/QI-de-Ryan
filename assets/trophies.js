@@ -1,4 +1,5 @@
 import { dayStart } from './util.js';
+import { rType } from './reactions.js';
 
 export const TIER = {
   b: { n: 'Bronze', c: '#d38b52' },
@@ -46,6 +47,9 @@ const I = {
   rain: '<path d="M7 15a4 4 0 1 1 1-7.9A5 5 0 0 1 18 9a3 3 0 0 1 0 6z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>',
   crowd: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2 20c0-4 3-6 6-6s6 2 6 6M10 20c0-4 3-6 6-6s6 2 6 6"/>',
   quote: '<path d="M5 17c0-5 2-8 5-9M14 17c0-5 2-8 5-9M5 17h4v-4H5zM14 17h4v-4h-4z"/>',
+  cake: '<path d="M4 21h16v-8H4zM4 16c2 1.5 4 1.5 5.3 0 1.4 1.5 4 1.5 5.4 0 1.3 1.5 3.3 1.5 5.3 0M8 13v-3M12 13v-3M16 13v-3M8 7.5v.5M12 7.5v.5M16 7.5v.5"/>',
+  egg: '<path d="M12 3c4 0 7 6 7 11a7 7 0 0 1-14 0c0-5 3-11 7-11z"/><path d="M7 13l2.5-1.5L12 13l2.5-1.5L17 13"/>',
+  brain: '<path d="M11 5.5A3 3 0 0 0 5.5 7 3 3 0 0 0 4 12a3 3 0 0 0 2 5 3 3 0 0 0 5 1.5zM13 5.5A3 3 0 0 1 18.5 7 3 3 0 0 1 20 12a3 3 0 0 1-2 5 3 3 0 0 1-5 1.5z"/><path d="M11 5.5v13M13 5.5v13"/>',
   diamond: '<path d="M6 4h12l4 6-10 11L2 10z"/><path d="M2 10h20M9 4l3 17 3-17"/>'
 };
 
@@ -88,9 +92,13 @@ export const TROPHIES = [
   { id: 'biographe', n: 'Biographe officiel', d: '50 votes commentés.', tier: 'o', ic: 'book', ok: S => S.comments >= 50 },
   { id: 'gloire', n: 'Jour de gloire', d: '+1,0 en une seule journée.', tier: 'o', ic: 'cup', ok: S => S.bestDay >= 10 },
   { id: 'noire', n: 'Journée noire', d: '−1,0 en une seule journée.', tier: 'o', ic: 'rain', ok: S => S.worstDay <= -10 },
+  { id: 'anniversaire', n: 'Bougie soufflée', d: 'Un vote le 10 mars, jour de son anniversaire. Cadeau : un neurone (d\'occasion).', tier: 'o', ic: 'cake', secret: true, ok: S => S.bday },
   { id: 'minuit', n: 'Douze coups de minuit', d: 'Un vote à minuit pile.', tier: 'o', ic: 'clock', secret: true, ok: S => S.midnight },
   { id: 'platine', n: 'Légende vivante', d: 'Tous les autres trophées débloqués.', tier: 'p', ic: 'diamond', ok: () => false }
 ];
+
+// Trophées ajoutés après coup : ils ne comptent pas pour le platine (un platine déjà obtenu ne doit pas se reverrouiller).
+const LATE = new Set(['anniversaire']);
 
 export function trophyIcon(T, got) {
   const tier = TIER[T.tier];
@@ -107,12 +115,18 @@ export function computeAll(votesMap, reactMap, START) {
     .sort((a, b) => a.t - b.t || (a.id < b.id ? -1 : 1));
   const countReacts = id => {
     const r = reactMap && reactMap[id];
-    return r && typeof r === 'object' ? Object.values(r).filter(x => x === true).length : 0;
+    return r && typeof r === 'object' ? Object.values(r).filter(x => rType(x)).length : 0;
+  };
+  // Détail par type de réaction : { respect: 3, mdr: 1, … }
+  const countByType = id => {
+    const r = reactMap && reactMap[id], out = {};
+    if (r && typeof r === 'object') for (const x of Object.values(r)) { const k = rType(x); if (k) out[k] = (out[k] || 0) + 1; }
+    return out;
   };
   const S = {
     s: START, min: START, max: START, hits: new Set(), up: 0, dn: 0, maxUp: 0, maxDown: 0, alt: 0, maxAlt: 0, prev: 0,
     below: false, back8: false, far: false, pile: false, total: 0, ups: 0, downs: 0, comments: 0,
-    insom: false, sunday: false, midnight: false, f13: false, tribunal: false,
+    insom: false, sunday: false, midnight: false, f13: false, bday: false, tribunal: false,
     days: new Map(), bestDay: 0, worstDay: 0, voters: new Set(), maxReact: 0
   };
   const points = [{ s: START, v: null, i: 0 }];
@@ -120,6 +134,7 @@ export function computeAll(votesMap, reactMap, START) {
   const recent = [];
   v.forEach((x, k) => {
     x.reacts = countReacts(x.id);
+    x.rx = countByType(x.id);
     S.s = Math.max(0, Math.min(100, S.s + x.d));
     x.after = S.s; x.i = k + 1;
     S.hits.add(S.s); S.min = Math.min(S.min, S.s); S.max = Math.max(S.max, S.s); S.total++;
@@ -137,6 +152,7 @@ export function computeAll(votesMap, reactMap, START) {
     if (d.getDay() === 0) S.sunday = true;
     if (h === 0 && d.getMinutes() === 0) S.midnight = true;
     if (d.getDate() === 13 && d.getDay() === 5) S.f13 = true;
+    if (d.getMonth() === 2 && d.getDate() === 10) S.bday = true;
     recent.push(x);
     while (recent.length && recent[0].t < x.t - 3600e3) recent.shift();
     if (new Set(recent.map(r => r.u || r.id)).size >= 3) S.tribunal = true;
@@ -146,7 +162,7 @@ export function computeAll(votesMap, reactMap, START) {
     points.push({ s: S.s, v: x, i: k + 1 });
     for (const T of TROPHIES) if (!unlock[T.id] && T.ok(S)) unlock[T.id] = { i: k + 1, t: x.t };
   });
-  if (TROPHIES.filter(T => T.id !== 'platine').every(T => unlock[T.id])) unlock.platine = { i: v.length, t: v[v.length - 1].t };
+  if (TROPHIES.filter(T => T.id !== 'platine' && !LATE.has(T.id)).every(T => unlock[T.id])) unlock.platine = { i: v.length, t: v[v.length - 1].t };
   return {
     v, points, s: S.s, S, unlock,
     trophies: TROPHIES.map(T => ({ ...T, got: !!unlock[T.id], at: unlock[T.id] }))

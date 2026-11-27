@@ -37,9 +37,26 @@
     </g>
     <g id="city" fill="#3b1456" opacity=".9"></g>
     <rect y="470" width="1200" height="130" fill="#47186a"/>
-    <g id="waves" stroke="#ffb0d3" stroke-width="3" opacity=".55"></g>
-    <path d="M560 120l14 8 14-8M600 150l11 6 11-6" stroke="#2a0b3d" stroke-width="4" fill="none"/>
-    <g fill="#24093a"><use class="palm" href="#palm" transform="translate(70 600) scale(1.5)"/><use class="palm" href="#palm" transform="translate(180 600) scale(1.1) rotate(6)"/><use class="palm" href="#palm" transform="translate(1150 600) scale(1.35) rotate(-5)"/></g>
+    <rect id="sea" y="470" width="1200" height="130" fill="transparent"/>
+    <g id="waves" stroke="#ffb0d3" stroke-width="3" opacity=".55" pointer-events="none"></g>
+    <g id="birds"><rect x="545" y="104" width="95" height="66" fill="transparent"/><path d="M560 120l14 8 14-8M600 150l11 6 11-6" stroke="#2a0b3d" stroke-width="4" fill="none"/></g>
+    <g id="tower">
+      <path d="M490 470L505 196 520 470M494 400h22M497 330h16M500 262h10M492 436l26-36M495 366l20-36M498 296l14-34" stroke="#24093a" stroke-width="4" fill="none"/>
+      <path d="M505 196v-18" stroke="#24093a" stroke-width="3"/><circle cx="505" cy="176" r="4" fill="#ff2a4d"/>
+      <g id="nest"><ellipse cx="505" cy="200" rx="15" ry="6" fill="#5a3a1e" stroke="#24093a" stroke-width="2"/><ellipse cx="499" cy="195" rx="4" ry="5" fill="#9fd8ff"/><ellipse cx="507" cy="194" rx="4" ry="5" fill="#ff8fc4"/><ellipse cx="513" cy="196" rx="3.5" ry="4.5" fill="#ffd45c"/></g>
+      <circle id="climber" cx="505" cy="462" r="6" fill="#ffd45c" stroke="#24093a" stroke-width="2" opacity="0"/>
+      <rect x="482" y="168" width="46" height="302" fill="transparent"/>
+    </g>
+    <g class="crate" transform="translate(410 446)"><rect x="-6" y="-6" width="44" height="34" fill="transparent"/><rect width="32" height="24" rx="2" fill="#3a2a1a" stroke="#24093a" stroke-width="2"/><path d="M0 8h32M0 16h32" stroke="#ffa24c" stroke-width="2.5"/><rect x="12" y="9" width="8" height="6" fill="#ffd45c"/></g>
+    <g id="car" transform="translate(-370 0)"><path d="M636 468l3-12 30-5 15-13h42l14 13 18 3 2 14z" fill="#24093a"/><path d="M688 442h17v10h-26zM709 442h15l10 10h-25z" fill="#ff9ad5" opacity=".55"/><rect x="752" y="456" width="6" height="5" fill="#ff2a4d"/><circle cx="660" cy="469" r="8" fill="#12051f"/><circle cx="736" cy="469" r="8" fill="#12051f"/><rect x="630" y="430" width="136" height="48" fill="transparent"/></g>
+    <g class="mob-only">
+      <ellipse cx="548" cy="566" rx="26" ry="6" fill="#e3a06a"/>
+      <g fill="#24093a"><use class="palm" href="#palm" transform="translate(548 566) scale(.34) rotate(-6)"/></g>
+      <g class="crate" transform="translate(566 540) scale(.8)"><rect x="-8" y="-10" width="48" height="40" fill="transparent"/><rect width="32" height="24" rx="2" fill="#3a2a1a" stroke="#24093a" stroke-width="2"/><path d="M0 8h32M0 16h32" stroke="#ffa24c" stroke-width="2.5"/><rect x="12" y="9" width="8" height="6" fill="#ffd45c"/></g>
+      <rect x="592" y="524" width="118" height="7" fill="#24093a"/><path d="M600 531v30M640 531v30M680 531v30" stroke="#24093a" stroke-width="4"/>
+      <g id="car-m" transform="translate(594 524) scale(.78) translate(-636 -476)"><path d="M636 468l3-12 30-5 15-13h42l14 13 18 3 2 14z" fill="#24093a"/><path d="M688 442h17v10h-26zM709 442h15l10 10h-25z" fill="#ff9ad5" opacity=".55"/><rect x="752" y="456" width="6" height="5" fill="#ff2a4d"/><circle cx="660" cy="469" r="8" fill="#12051f"/><circle cx="736" cy="469" r="8" fill="#12051f"/><rect x="630" y="430" width="136" height="48" fill="transparent"/></g>
+    </g>
+    <g fill="#24093a"><use class="palm" href="#palm" transform="translate(70 600) scale(1.5)"/><use class="palm" href="#palm" transform="translate(180 600) scale(1.1) rotate(6)"/><use class="palm" href="#palm" transform="translate(1150 600) scale(1.35) rotate(-5)"/><use class="palm" href="#palm" transform="translate(790 600) scale(.8) rotate(4)"/></g>
   </svg>
   <div class="wrap">
     <div class="intro">
@@ -52,6 +69,10 @@
           <button class="icon-btn" id="sound" type="button" aria-label="Activer les sons" aria-pressed="false" aria-describedby="tip-sound"></button>
           <span class="tip" id="tip-sound" role="tooltip">Activer les sons</span>
         </span>
+        <span class="icon-wrap">
+          <button class="icon-btn" id="map-open" type="button" aria-label="Ouvrir la carte" aria-describedby="tip-map"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/></svg></button>
+          <span class="tip" id="tip-map" role="tooltip">Ouvrir la carte</span>
+        </span>
       </div>
     </div>
     <section class="hud loading" aria-labelledby="hud-t">
@@ -60,7 +81,7 @@
         <button class="ref" id="ref" type="button" aria-label="Repère : 8 sur 10 auto-déclaré"><i></i>Repère : 8 auto-déclaré</button>
       </div>
       <div class="hud-main">
-        <figure class="ryan"><div class="ryan-art" id="ryan"></div><figcaption id="stage">Chargement…</figcaption></figure>
+        <figure class="ryan"><svg class="hat" viewBox="0 0 40 50" aria-hidden="true"><path d="M20 4L36 46H4z" fill="#ff5fa2" stroke="#12051f" stroke-width="3" stroke-linejoin="round"/><path d="M13 24h14M9 36h22" stroke="#ffd45c" stroke-width="4"/><circle cx="20" cy="5" r="5" fill="#ffd45c" stroke="#12051f" stroke-width="2"/></svg><div class="ryan-art" id="ryan"></div><figcaption id="stage">Chargement…</figcaption></figure>
         <div>
           <div class="hud-num" aria-live="polite"><span id="score">8,0</span><small>/10</small></div>
           <p class="delta" id="delta">Chargement du dossier…</p>
@@ -113,7 +134,7 @@
 
   <section class="band"><div class="wrap grid-b">
     <div>
-      <h2>Casier de Ryan</h2>
+      <h2 id="casier-t">Casier de Ryan</h2>
       <p class="muted">Chaque vote, avec ce qu'il a dit pour le mériter. Appuie les meilleures.</p>
       <ul class="log" id="log"></ul>
       <button class="btn" id="more" type="button" hidden>Afficher 40 votes de plus</button>
@@ -128,7 +149,7 @@
 
 <footer class="band"><div class="wrap">
   <span id="mode"><span class="dot"></span>Connexion…</span>
-  <span>Les vrais connaissent les codes de triche.</span>
+  <button class="linkish" type="button" id="cheat-open">Les vrais connaissent les codes de triche.</button>
 </div></footer>
 
 <div class="scrim" id="scrim">
@@ -136,8 +157,9 @@
     <h2 id="m-t">Voter −0,1</h2>
     <p class="muted" id="m-sub"></p>
     <form id="form" novalidate>
-      <label for="f-name">Ton blaze <small>(facultatif)</small></label>
-      <input id="f-name" maxlength="24" autocomplete="nickname">
+      <label for="f-name">Ton blaze <small>(facultatif · choisis-toi dans la liste pour rester groupé)</small></label>
+      <input id="f-name" maxlength="24" autocomplete="nickname" list="names">
+      <datalist id="names"></datalist>
       <label for="f-com">Ce qu'il a dit ou fait <small>(facultatif)</small></label>
       <textarea id="f-com" maxlength="140" placeholder="Ex. : « Le soleil tourne autour de la Terre, c'est logique »"></textarea>
       <div class="count" id="f-count">0/140</div>
@@ -149,6 +171,36 @@
     </form>
   </div>
 </div>
+<div class="scrim" id="cheatdlg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="c-t">
+    <h2 id="c-t">Téléphone à codes</h2>
+    <p class="muted">Compose un code de triche. Les vrais savent.</p>
+    <form id="cheatform" novalidate>
+      <label for="c-in">Code</label>
+      <input id="c-in" maxlength="40" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <p class="err" id="c-err" role="alert"></p>
+      <div class="actions">
+        <button class="btn" type="button" id="c-cancel">Raccrocher</button>
+        <button class="btn primary" type="submit">Composer le code</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="scrim" id="mapdlg">
+  <div class="mapbox" role="dialog" aria-modal="true" aria-labelledby="map-t">
+    <div class="maphead"><div><h2 id="map-t">Carte de Neuronida</h2><p class="muted" id="map-sub"></p></div><button class="btn" type="button" id="map-close">Fermer la carte</button></div>
+    <div class="mapbody"><div class="mapfig" id="mapfig"><p class="mapcap" id="map-cap" aria-live="polite"></p></div><ol class="egglist" id="egglist"></ol></div>
+  </div>
+</div>
+<div class="scrim" id="posterdlg">
+  <div class="posterbox" role="dialog" aria-modal="true" aria-label="Affiche officielle du QI de Ryan">
+    <div class="poster-grid" id="poster-grid"></div>
+    <p class="poster-foot">Prévu pour 2025. Finalement livré fin 2026. Peut-être.</p>
+    <button class="btn primary" type="button" id="poster-close">Fermer l'affiche</button>
+  </div>
+</div>
+<div class="rxpick" id="rxpick" role="menu" aria-label="Choisir une réaction" hidden></div>
+<div class="eggpop" id="eggpop" role="status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c4 0 7 6 7 11a7 7 0 0 1-14 0c0-5 3-11 7-11z"/></svg><span></span></div>
 <div class="wanted" id="wanted" aria-hidden="true"></div>
 <div class="banner" id="banner" aria-live="assertive"><div><b id="b-t">TROPHÉE DÉBLOQUÉ</b><span class="script" id="b-s"></span><small id="b-d"></small></div></div>
 <div class="toast" id="toast" role="status"></div>

@@ -4,7 +4,8 @@ import { ls } from './util.js';
 // Données Firebase (inchangées depuis la v1, ne pas renommer) :
 //   votes/<id>        { d: 1|-1, t: timestamp serveur, u: id navigateur, n?: pseudo, c?: commentaire }
 //   last/<u>          timestamp du dernier vote de ce navigateur (anti-spam 10 s côté serveur)
-//   reactions/<id>/<u> true  (réaction « Appuyé » sur un vote commenté)
+//   reactions/<id>/<u> true | 'respect'|'mdr'|'wanted'|'croco'|'cash'|'confiance'
+//                      (true = ancienne réaction « Appuyé », lue comme 'respect')
 export function createStore(uid) {
   return FIREBASE_URL ? firebaseStore(FIREBASE_URL.replace(/\/+$/, ''), uid) : demoStore(uid);
 }
@@ -91,12 +92,14 @@ function firebaseStore(base, uid) {
       if (!r.ok) throw new Error(r.status === 401 ? 'cooldown' : 'net');
       fetchOnce('votes').catch(() => {});
     },
-    async react(id, on) {
+    // type = id de réaction, ou null pour retirer la sienne. 'respect' reste stocké en true (compatible anciennes règles).
+    async react(id, type) {
+      const val = type === 'respect' ? true : type || null;
       const before = state.reactions;
-      state.reactions = applyPath(state.reactions, `${id}/${uid}`, on ? true : null);
+      state.reactions = applyPath(state.reactions, `${id}/${uid}`, val);
       emitters.reactions();
       const url = `${base}/reactions/${encodeURIComponent(id)}/${encodeURIComponent(uid)}.json`;
-      const r = await fetch(url, on ? { method: 'PUT', body: 'true' } : { method: 'DELETE' }).catch(() => null);
+      const r = await fetch(url, val ? { method: 'PUT', body: JSON.stringify(val) } : { method: 'DELETE' }).catch(() => null);
       if (!r || !r.ok) { state.reactions = before; emitters.reactions(); throw new Error('react'); }
     }
   };
@@ -119,10 +122,10 @@ function demoStore(uid) {
       ls.set('ryan_demo', JSON.stringify(arr));
       cb.onVotes?.(votes());
     },
-    async react(id, on) {
+    async react(id, type) {
       const r = read('ryan_demo_react', {});
       r[id] = { ...(r[id] || {}) };
-      if (on) r[id][uid] = true; else delete r[id][uid];
+      if (type) r[id][uid] = type === 'respect' ? true : type; else delete r[id][uid];
       ls.set('ryan_demo_react', JSON.stringify(r));
       cb.onReactions?.(r);
     }
