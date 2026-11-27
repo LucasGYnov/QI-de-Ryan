@@ -58,6 +58,20 @@ function pop(txt) {
   popTimer = setTimeout(() => el.classList.remove('show'), 2800);
 }
 
+// Remet à zéro tous les easter eggs (ids vide) ou seulement ceux listés. Le cerveau repart avec « all ».
+export function reset(ids) {
+  const list = ids && ids.length ? ids.filter(id => found.has(id)) : null;
+  if (list && !list.length) { api.toast('Easter egg inconnu ou pas encore trouvé.'); return; }
+  const what = list ? list.map(id => BY[id].n).join(', ') : 'tous les easter eggs et le cerveau';
+  if (!confirm(`Réinitialiser ${what} sur cet appareil ?`)) return;
+  if (list) list.forEach(id => found.delete(id));
+  else { found.clear(); brain = false; ls.set('ryan_brain', '0'); }
+  ls.set('ryan_eggs', JSON.stringify([...found]));
+  api.toast(list ? `Réinitialisé : ${what}.` : 'Easter eggs remis à zéro.');
+  api.onChange?.();
+  if (mapOpen) paintMap();
+}
+
 export function hit(id) {
   if (!BY[id] || found.has(id)) return;
   found.add(id);

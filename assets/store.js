@@ -4,8 +4,27 @@ import { ls } from './util.js';
 // Données Firebase (inchangées depuis la v1, ne pas renommer) :
 //   votes/<id>        { d: 1|-1, t: timestamp serveur, u: id navigateur, n?: pseudo, c?: commentaire }
 //   last/<u>          timestamp du dernier vote de ce navigateur (anti-spam 10 s côté serveur)
-//   reactions/<id>/<u> true | 'respect'|'mdr'|'wanted'|'croco'|'cash'|'confiance'
-//                      (true = ancienne réaction « Appuyé », lue comme 'respect')
+//   reactions/<id>/<u>        true = Respect (ancienne réaction « Appuyé »)
+//   reactions/<id>/<u>~<type> true = autre réaction (mdr, wanted, croco, cash, confiance)
+//   Ce format passe avec les anciennes règles Firebase (qui n'acceptent que true).
+//   Une valeur texte reactions/<id>/<u> = '<type>' reste lue (format v3).
+const TYPES = /^(respect|mdr|wanted|croco|cash|confiance)$/;
+// Ramène le brut Firebase à { vote: { uid: true | type } }, une réaction par personne.
+function norm(raw) {
+  const out = {};
+  for (const [id, r] of Object.entries(raw || {})) {
+    if (!r || typeof r !== 'object') continue;
+    const o = {};
+    for (const [k, v] of Object.entries(r)) {
+      const i = k.indexOf('~');
+      if (i < 0) { if (!(o[k] && o[k] !== true)) o[k] = v; continue; }
+      const u = k.slice(0, i), t = k.slice(i + 1);
+      if (v === true && TYPES.test(t)) o[u] = t;
+    }
+    out[id] = o;
+  }
+  return out;
+}
 export function createStore(uid) {
   return FIREBASE_URL ? firebaseStore(FIREBASE_URL.replace(/\/+$/, ''), uid) : demoStore(uid);
 }
@@ -81,7 +100,7 @@ function firebaseStore(base, uid) {
     subscribe(c) {
       cb = c;
       emitters.votes = () => cb.onVotes?.(state.votes);
-      emitters.reactions = () => cb.onReactions?.(state.reactions);
+      emitters.reactions = () => cb.onReactions?.(norm(state.reactions));
       stream('votes');
       stream('reactions');
     },
@@ -92,14 +111,19 @@ function firebaseStore(base, uid) {
       if (!r.ok) throw new Error(r.status === 401 ? 'cooldown' : 'net');
       fetchOnce('votes').catch(() => {});
     },
-    // type = id de réaction, ou null pour retirer la sienne. 'respect' reste stocké en true (compatible anciennes règles).
+    // type = id de réaction, ou null pour retirer la sienne. Un seul PATCH : pose la nouvelle clé, efface les anciennes.
     async react(id, type) {
-      const val = type === 'respect' ? true : type || null;
+      const raw = state.reactions[id] || {};
+      const key = !type ? null : type === 'respect' ? uid : `${uid}~${type}`;
+      const body = {};
+      for (const k of Object.keys(raw)) if ((k === uid || k.startsWith(uid + '~')) && k !== key) body[k] = null;
+      if (key) body[key] = true;
+      if (!Object.keys(body).length) return;
       const before = state.reactions;
-      state.reactions = applyPath(state.reactions, `${id}/${uid}`, val);
+      for (const [k, v] of Object.entries(body)) state.reactions = applyPath(state.reactions, `${id}/${k}`, v);
       emitters.reactions();
-      const url = `${base}/reactions/${encodeURIComponent(id)}/${encodeURIComponent(uid)}.json`;
-      const r = await fetch(url, val ? { method: 'PUT', body: JSON.stringify(val) } : { method: 'DELETE' }).catch(() => null);
+      const url = `${base}/reactions/${encodeURIComponent(id)}.json`;
+      const r = await fetch(url, { method: 'PATCH', body: JSON.stringify(body) }).catch(() => null);
       if (!r || !r.ok) { state.reactions = before; emitters.reactions(); throw new Error('react'); }
     }
   };

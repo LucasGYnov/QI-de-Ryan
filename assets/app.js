@@ -202,6 +202,7 @@ function renderLog() {
   const list = [...D.v].reverse();
   $('#log').innerHTML = list.length ? list.slice(0, shownLog).map(v => `<li><span class="sign ${v.d > 0 ? 'p' : 'm'}">${v.d > 0 ? '+' : '−'}</span><div>${v.c ? `<q>${esc(v.c)}</q>` : '<span class="nc">Sans commentaire</span>'}<small>${esc(voterName(v.u, v.n))} · ${esc(ago(v.t))}</small>${v.c ? reactUI(v) : ''}</div><span class="after">${fmt(v.after)}</span></li>`).join('') : '<li class="empty-li">Casier vierge. Pour l\'instant.</li>';
   $('#more').hidden = list.length <= shownLog;
+  $('#more').textContent = `Afficher ${plural(Math.min(40, list.length - shownLog), 'vote', 'votes')} de plus`;
   if (focus) [...document.querySelectorAll(focus.more ? '.rx-more' : '.rx-main')].find(b => b.dataset.id === focus.id)?.focus();
 }
 
@@ -562,7 +563,8 @@ const CODES = {
   krav: () => eggs.punch(), maga: () => eggs.punch(),
   vroum: () => eggs.f1(),
   csgo: () => eggs.crate(), karambit: () => eggs.crate(), awp: () => eggs.crate(), dragonlore: () => eggs.crate(),
-  morgane: () => eggs.smoke()
+  morgane: () => eggs.smoke(),
+  reset: () => eggs.reset()
 };
 const KONAMI_TXT = ['hauthautbasbasgauchedroitegauchedroiteba', 'uuddlrlrba', 'konami'];
 const konami = () => { eggs.hit('konami'); banner('CODE DE TRICHE ACTIVÉ', 'Score inchangé', 'La triche, c\'est pour les 2/10.'); };
@@ -573,6 +575,7 @@ function tryCode(raw) {
   const c = nameKey(raw).replace(/[^a-z0-9]/g, '');
   if (KONAMI_TXT.includes(c)) { konami(); return true; }
   if (CODES[c]) { runCode(c, CODES[c]); return true; }
+  if (c.startsWith('reset')) { eggs.reset([c.slice(5)]); return true; }
   return false;
 }
 const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
