@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#24093f"/><stop offset=".4" stop-color="#6a2283"/><stop offset=".7" stop-color="#e0488f"/><stop offset="1" stop-color="#ffb55c"/></linearGradient><linearGradient id="sn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#ff5f9e"/></linearGradient><mask id="m"><rect width="512" height="512" fill="#fff"/><g fill="#000"><rect x="0" y="268" width="512" height="4"/><rect x="0" y="290" width="512" height="6"/><rect x="0" y="312" width="512" height="8"/><rect x="0" y="334" width="512" height="10"/><rect x="0" y="356" width="512" height="12"/><rect x="0" y="378" width="512" height="14"/></g></mask><clipPath id="cl"><rect width="512" height="512" rx="112"/></clipPath></defs><g clip-path="url(#cl)"><rect width="512" height="512" fill="url(#bg)"/><circle cx="256" cy="250" r="170" fill="url(#sn)" mask="url(#m)"/><svg x="86" y="118" width="340" height="378" viewBox="0 0 200 222" role="img" aria-label="Ryan, état : Sûr de lui"><defs>
+    <linearGradient id="ic-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a1a6a"/><stop offset=".5" stop-color="#d0508f"/><stop offset="1" stop-color="#ffb066"/></linearGradient>
+    <linearGradient id="ic-skin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5262"/><stop offset=".45" stop-color="#d49a76"/><stop offset="1" stop-color="#f6c8a0"/></linearGradient>
+    <linearGradient id="ic-neck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5262"/><stop offset=".45" stop-color="#d49a76"/></linearGradient>
+    <linearGradient id="ic-hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b1a12"/><stop offset=".7" stop-color="#2b1a12"/><stop offset="1" stop-color="#7a5238"/></linearGradient>
+    <linearGradient id="ic-shirt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2e2350"/><stop offset="1" stop-color="#6a4f9e"/></linearGradient>
+    <linearGradient id="ic-tee" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9a9d6"/><stop offset="1" stop-color="#f4f0ff"/></linearGradient>
+    <radialGradient id="ic-iris"><stop offset="0" stop-color="#9a6034"/><stop offset="1" stop-color="#4a2a14"/></radialGradient>
+    <linearGradient id="ic-metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6d6a8a"/><stop offset=".55" stop-color="#d9dbe6"/><stop offset="1" stop-color="#fff5e6"/></linearGradient>
+    <pattern id="ic-stub" width="1.9" height="2.3" patternUnits="userSpaceOnUse" patternTransform="rotate(28)"><circle cx=".8" cy=".8" r=".55" fill="#2b1a12"/><circle cx="1.6" cy="1.9" r=".4" fill="#2b1a12"/></pattern>
+    <clipPath id="ic-c"><circle cx="100" cy="110" r="96"/></clipPath></defs><g>
+    <!-- cheveux, couche arrière (jusqu'aux épaules) -->
+    <path d="M56 80C52 42 76 22 100 22s48 20 44 58c2 30 6 58 16 84-10 8-24 8-34 2H74c-10 6-24 6-34-2 10-26 14-54 16-84z" fill="url(#ic-hair)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- buste : chemise ouverte sur t-shirt -->
+    <path d="M6 222C10 184 42 166 74 160h52c32 6 64 24 68 62z" fill="url(#ic-shirt)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M28 196c8-10 18-16 30-20M172 196c-8-10-18-16-30-20" stroke="#6a4f9e" stroke-width="2" opacity=".5" fill="none"/>
+    <path d="M77 160L100 200L123 160Z" fill="url(#ic-tee)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M76 160L91 196L62 178ZM124 160L109 196L138 178Z" fill="#2e2350" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M186 210C182 190 170 178 152 170" stroke="#ffcf9a" stroke-width="2" fill="none" opacity=".8"/>
+    <!-- cou -->
+    <path d="M80 124c0 18-1 28-4 38h48c-3-10-4-20-4-38z" fill="url(#ic-neck)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M80 128c8 10 32 10 40 0v10c-10 7-30 7-40 0z" fill="#8a5262" opacity=".55"/>
+    <path d="M99 146q2 5 1 9" stroke="#8a5262" stroke-width="1.6" fill="none" opacity=".7"/>
+    <path d="M85 160q15 24 30 0" fill="none" stroke="#e8b84a" stroke-width="1.6"/>
+    <!-- visage, mâchoire carrée -->
+    <path d="M62 80C62 50 80 36 100 36s38 14 38 44c0 16-2 26-5 34-4 12-15 24-27 27-4 1-8 1-12 0-12-3-23-15-27-27-3-8-5-18-5-34z" fill="url(#ic-skin)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M62 80c0 16 2 26 5 34 4 12 15 24 27 27-9-6-15-16-18-28-4-14-4-30 0-50-8 3-14 9-14 17z" fill="#8a5262" opacity=".45"/>
+    <path d="M136 64c3 20 1 38-5 52" fill="none" stroke="#ffd9b0" stroke-width="2.4" opacity=".9"/>
+    <ellipse cx="121" cy="101" rx="8" ry="5" fill="#f6c8a0" opacity=".4"/>
+    <!-- barbe légère sur les côtés, sans moustache -->
+    <g>
+      <path d="M62 82c0 16 2 26 5 34 4 12 15 24 27 27l1-6c-9-4-16-12-20-22-4-10-5-20-5-33zM138 82c0 16-2 26-5 34-4 12-15 24-27 27l-1-6c9-4 16-12 20-22 4-10 5-20 5-33z" fill="#2b1a12" opacity=".42"/>
+      <path d="M62 82c0 16 2 26 5 34 4 12 15 24 27 27l1-6c-9-4-16-12-20-22-4-10-5-20-5-33zM138 82c0 16-2 26-5 34-4 12-15 24-27 27l-1-6c9-4 16-12 20-22 4-10 5-20 5-33z" fill="url(#ic-stub)" opacity=".75"/>
+    </g>
+    <!-- gros nez -->
+    <path d="M98 82c-2 12-6 20-10 26-3 5-1 11 5 12l6-2z" fill="#8a5262" opacity=".55"/>
+    <path d="M104 86c1.5 9 1.5 17 .5 23" fill="none" stroke="#f6c8a0" stroke-width="2.6" opacity=".55"/>
+    <ellipse cx="101.5" cy="113.5" rx="6.5" ry="5" fill="#d49a76"/>
+    <ellipse cx="103" cy="112" rx="3.8" ry="2.6" fill="#f6c8a0" opacity=".7"/>
+    <path d="M89 108c-7 9-1 15 7 12M112 108c7 9 1 15-7 12" fill="none" stroke="#7a4238" stroke-width="1.5" stroke-linecap="round" opacity=".85"/>
+    <path d="M93 120q7.5 4 15 0" fill="none" stroke="#6a3a30" stroke-width="1.4"/>
+    <ellipse cx="95.6" cy="119" rx="3" ry="1.5" fill="#3a1a16"/><ellipse cx="105.4" cy="119" rx="3" ry="1.5" fill="#3a1a16"/>
+    
+    <ellipse cx="85" cy="84" rx="9" ry="4" fill="#8a5262" opacity=".35"/>
+    <path d="M77 87Q85 83 93 87Q85 91 77 87Z" fill="#f4ece8"/>
+    <circle cx="85" cy="87" r="3.2" fill="url(#ic-iris)"/>
+    <circle cx="85" cy="87" r="1.4" fill="#1a0c08"/>
+    <circle cx="86.1" cy="86" r=".8" fill="#fff"/>
+    <path d="M76.5 87Q85 82.5 93.5 87" fill="none" stroke="#2a1420" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="115" cy="84" rx="9" ry="4" fill="#8a5262" opacity=".35"/>
+    <path d="M107 87Q115 82 123 87Q115 91 107 87Z" fill="#f4ece8"/>
+    <circle cx="115" cy="87" r="3.2" fill="url(#ic-iris)"/>
+    <circle cx="115" cy="87" r="1.4" fill="#1a0c08"/>
+    <circle cx="116.1" cy="86" r=".8" fill="#fff"/>
+    <path d="M106.5 87Q115 81.5 123.5 87" fill="none" stroke="#2a1420" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><path d="M73 80Q85 75 97 77L97 80.5Q85 79 73 83.5Z" fill="#2b1a12"/><path d="M103 77Q115 70 127 75L127 78.5Q115 74.5 103 80.5Z" fill="#2b1a12"/>
+    <path d="M90 130.9C95 127 98 128 100 128.5C102 128 105 127 110 128.1C105 130.5 95 130.5 90 130.9Z" fill="#9a5048"/>
+    <path d="M91 131.3C96 134.5 104 134.5 109 128.5C104 131.5 96 131.5 91 131.3Z" fill="#c07466"/>
+    <path d="M90 130.9Q100 131 110 128.1" fill="none" stroke="#2a1420" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/><path d="M108 127q3-1 4-3.5" fill="none" stroke="#2a1420" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- cheveux, mèches avant (raie au milieu, rideau sur les tempes) -->
+    <path d="M60 86c-4-28 8-46 30-52-8 10-14 22-18 38-2 10-4 20-6 30-3-4-5-10-6-16z" fill="url(#ic-hair)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M140 86c4-28-8-46-30-52 8 10 14 22 18 38 2 10 4 20 6 30 3-4 5-10 6-16z" fill="url(#ic-hair)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M68 64c6-20 18-30 32-30s26 10 32 30c-8-10-18-16-32-16S76 54 68 64z" fill="url(#ic-hair)" stroke="#2a1420" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M100 34v12" stroke="#8a5262" stroke-width="1.4" opacity=".6"/>
+    <g fill="none" stroke-linecap="round">
+      <path d="M128 44c8 14 10 34 10 56M122 42c6 8 8 18 8 30M144 98c2 24 6 46 14 64" stroke="#7a5238" stroke-width="1.6" opacity=".85"/>
+      <path d="M72 46c-6 12-8 28-8 46M58 100c-2 22-6 44-14 62" stroke="#b07ad0" stroke-width="1.6" opacity=".7"/>
+      <path d="M96 36c-8 4-14 12-18 22M106 36c8 4 14 12 18 22" stroke="#7a5238" stroke-width="1.2" opacity=".6"/>
+    </g></g></svg></g></svg>

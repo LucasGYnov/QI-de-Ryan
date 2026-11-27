@@ -1,0 +1,26 @@
+# Contexte local pour Claude Code : gardé sur ta machine, jamais poussé.
+# (Retire ces deux lignes si tu veux le versionner.)
+CLAUDE.md
+.claude/
+
+# Éditeurs et systèmes
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Outils, tests et captures locales
+node_modules/
+test/
+screenshots/
+*.log
+firebase-debug.log
+.firebase/
+.firebaserc
+
+# Secrets éventuels
+.env
+.env.*
+*.pem
+service-account*.json

@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "votes": {
+      ".read": true,
+      "$id": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['d', 't', 'u']) && newData.child('t').val() === now && newData.parent().parent().child('last').child(newData.child('u').val()).val() === now",
+        "d": { ".validate": "newData.val() === 1 || newData.val() === -1" },
+        "t": { ".validate": "newData.isNumber()" },
+        "u": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "n": { ".validate": "newData.isString() && newData.val().length <= 24" },
+        "c": { ".validate": "newData.isString() && newData.val().length <= 140" },
+        "$other": { ".validate": false }
+      }
+    },
+    "last": {
+      "$u": {
+        ".write": "!data.exists() || now - data.val() >= 10000",
+        ".validate": "newData.val() === now"
+      }
+    },
+    "reactions": {
+      ".read": true,
+      "$vote": {
+        "$u": {
+          ".write": "root.child('votes').child($vote).child('c').exists() && $u.length <= 40",
+          ".validate": "newData.val() === true"
+        }
+      }
+    }
+  }
+}
