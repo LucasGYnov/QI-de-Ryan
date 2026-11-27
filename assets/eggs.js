@@ -32,7 +32,8 @@ export const EGGS = [
   { id: 'csgo', bonus: true, n: 'Caisse ouverte', x: 60, y: 450, hint: 'Une caisse traîne sur le front de mer. Ou tape « csgo ».' },
   { id: 'morgane', bonus: true, n: 'Nuage de fumée', x: 70, y: 545, hint: 'Tape « morgane ».' },
   { id: 'radar', bonus: true, n: 'Excès de vitesse', x: 565, y: 100, hint: 'Fais défiler la page beaucoup trop vite.' },
-  { id: 'dixtrois', bonus: true, n: '10 h 03', x: 160, y: 742, hint: 'Vote à 10 h 03, comme sa date d\'anniversaire.' }
+  { id: 'dixtrois', bonus: true, n: '10 h 03', x: 160, y: 742, hint: 'Vote à 10 h 03, comme sa date d\'anniversaire.' },
+  { id: 'arcade', bonus: true, n: 'Salle d\'arcade', x: 470, y: 640, hint: 'Termine une partie à la salle d\'arcade.' }
 ];
 const REQ = EGGS.filter(e => !e.bonus);
 const BY = Object.fromEntries(EGGS.map(e => [e.id, e]));

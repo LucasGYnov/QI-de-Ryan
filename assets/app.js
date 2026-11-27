@@ -8,6 +8,7 @@ import * as sfx from './audio.js';
 import { buildCard } from './share.js';
 import { REACTS, REACT_BY, rType, reactIcon } from './reactions.js';
 import * as eggs from './eggs.js';
+import * as games from './games.js';
 
 const uid = ls.get('ryan_uid') || (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
 ls.set('ryan_uid', uid);
@@ -564,7 +565,8 @@ const CODES = {
   vroum: () => eggs.f1(),
   csgo: () => eggs.crate(), karambit: () => eggs.crate(), awp: () => eggs.crate(), dragonlore: () => eggs.crate(),
   morgane: () => eggs.smoke(),
-  reset: () => eggs.reset()
+  reset: () => eggs.reset(),
+  arcade: () => games.open('crossy'), tetris: () => games.open('tetris'), snake: () => games.open('snake'), dino: () => games.open('run')
 };
 const KONAMI_TXT = ['hauthautbasbasgauchedroitegauchedroiteba', 'uuddlrlrba', 'konami'];
 const konami = () => { eggs.hit('konami'); banner('CODE DE TRICHE ACTIVÉ', 'Score inchangé', 'La triche, c\'est pour les 2/10.'); };
@@ -635,3 +637,4 @@ $('#cheatform').addEventListener('submit', e => {
 });
 
 eggs.init({ banner, toast, sfx, ryanSVG, onChange: () => { if (D) renderTrophies(); } });
+games.init({ sfx, hit: eggs.hit });
